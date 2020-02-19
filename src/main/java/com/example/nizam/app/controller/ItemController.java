@@ -7,6 +7,8 @@ import java.util.List;
 import com.example.nizam.app.data.entity.Item;
 import com.example.nizam.app.data.service.ItemService;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +29,8 @@ import io.swagger.annotations.ApiParam;
 @Api(value = "Item Controller")
 public class ItemController {
 
+    private final Logger LOG = LogManager.getLogger(this.getClass());
+
     @Autowired
     ItemService itemService;
 
@@ -34,6 +38,7 @@ public class ItemController {
     @GetMapping()
     public ResponseEntity<List<Item>> listAllItems() {
         List<Item> items = itemService.itemListOrderedByHighestPrice();
+        LOG.info("List of all items :" + items.size());
         return new ResponseEntity<>(items, HttpStatus.OK);
     }
 
@@ -43,6 +48,7 @@ public class ItemController {
         item.setItemId(null);
         item.setCreatedDate(Date.from(Instant.now()));
         Item saveditem = itemService.saveItem(item);
+        LOG.info("Add new Item :" + saveditem.toString());
         return new ResponseEntity<>(saveditem, HttpStatus.OK);
     }
 
@@ -50,6 +56,7 @@ public class ItemController {
     @GetMapping("/{id}")
     public ResponseEntity<Item> getItem(@ApiParam("Item Id") @PathVariable Long id) {
          Item item = itemService.findItem(id);
+         LOG.info("Get item by Item Id :" + item.toString());
         return new ResponseEntity<>(item, HttpStatus.OK);
     }
 
@@ -58,6 +65,7 @@ public class ItemController {
     public ResponseEntity<List<Item>> removeItem(@ApiParam("Item Id") @PathVariable Long id) {
         itemService.removeItem(id);
          List<Item> items = itemService.itemListOrderedByHighestPrice();
+         LOG.info("Remove item by Item Id :" + id.toString());
         return new ResponseEntity<>(items, HttpStatus.OK);
     }
 
