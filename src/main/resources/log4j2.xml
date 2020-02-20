@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" monitorInterval="30">
+    <Properties>
+        <Property name="LOG_PATTERN">[%-5p] | %d{yyyy-MM-dd HH:mm:ss.SSS} | [%t] %c (%F:%L) - %m%n</Property>
+        <Property name="logFilePath">log/demo-rest-service.log</Property>
+    </Properties>
+    <Appenders>
+       <Console name="LogToConsole" target="SYSTEM_OUT">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+        </Console>
+        <File name="LogToFile" fileName="${logFilePath}">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+        </File>
+        <RollingFile name="LogToRollingFile" fileName="${logFilePath}" filePattern="${logFilePath}/demo-rest-service.%i.log.gz">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="10MB" />
+            </Policies>
+        </RollingFile>
+    </Appenders>
+    <Loggers>
+        <Logger name="com.example.nizam.app" level="debug" additivity="false">
+            <AppenderRef ref="LogToConsole" />
+            <AppenderRef ref="LogToFile" />
+            <AppenderRef ref="LogToRollingFile" />
+        </Logger>
+
+        <Logger name="org.springframework" level="debug" additivity="false">
+          <AppenderRef ref="LogToConsole" />
+          <AppenderRef ref="LogToFile" />
+          <AppenderRef ref="LogToRollingFile" />
+        </Logger>
+
+        <Logger name="org.hibernate" level="debug" additivity="false">
+           <AppenderRef ref="LogToConsole" />
+           <AppenderRef ref="LogToFile" />
+           <AppenderRef ref="LogToRollingFile" />
+        </Logger>
+
+        <Logger name="org.flywaydb" level="debug" additivity="false">
+           <AppenderRef ref="LogToConsole" />
+           <AppenderRef ref="LogToFile" />
+           <AppenderRef ref="LogToRollingFile" />
+        </Logger>
+
+
+        <Root level="trace">
+            <AppenderRef ref="ConsoleAppender" />
+            <AppenderRef ref="LogFile" />
+            <AppenderRef ref="LogToRollingFile" />
+        </Root>
+    </Loggers>
+</Configuration>
