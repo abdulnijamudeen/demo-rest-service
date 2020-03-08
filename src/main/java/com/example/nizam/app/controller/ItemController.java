@@ -7,8 +7,6 @@ import java.util.List;
 import com.example.nizam.app.data.entity.Item;
 import com.example.nizam.app.data.service.ItemService;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,13 +21,14 @@ import org.springframework.web.bind.annotation.RestController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import lombok.var;
+import lombok.extern.log4j.Log4j2;
 
 @RestController
 @RequestMapping(value = "/api/items")
 @Api(value = "Item Controller")
+@Log4j2
 public class ItemController {
-
-    private final Logger LOG = LogManager.getLogger(this.getClass());
 
     @Autowired
     ItemService itemService;
@@ -37,7 +36,7 @@ public class ItemController {
     @ApiOperation("List of all items")
     @GetMapping()
     public ResponseEntity<List<Item>> listAllItems() {
-        List<Item> items = itemService.itemListOrderedByHighestPrice();
+        var items = itemService.itemListOrderedByHighestPrice();
         LOG.info("List of all items :" + items.size());
         return new ResponseEntity<>(items, HttpStatus.OK);
     }
