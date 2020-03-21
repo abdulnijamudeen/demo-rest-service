@@ -50,20 +50,30 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.cors().and().authorizeRequests().anyRequest().authenticated();
 
-        http.formLogin().loginProcessingUrl("/login").usernameParameter("username").passwordParameter("password").successHandler(authenticationSuccessHandler())
-                .failureHandler((req, resp, auth) -> resp.sendError(HttpServletResponse.SC_UNAUTHORIZED, auth.getMessage()));
+        http.formLogin()
+        .loginProcessingUrl("/login")
+        .usernameParameter("username")
+        .passwordParameter("password")
+        .successHandler(authenticationSuccessHandler())
+        .failureHandler((req, resp, auth) -> resp.sendError(HttpServletResponse.SC_UNAUTHORIZED, auth.getMessage()));
 
-        http.logout().logoutUrl("/logout").clearAuthentication(true).invalidateHttpSession(true).logoutSuccessHandler(logoutSuccessHandler());
+        http.logout()
+        .logoutUrl("/logout")
+        .clearAuthentication(true)
+        .invalidateHttpSession(true)
+        .logoutSuccessHandler(logoutSuccessHandler());
 
         http.anonymous().disable();
 
-        http.exceptionHandling().accessDeniedHandler((req, res, auth) -> res.sendError(HttpServletResponse.SC_UNAUTHORIZED, auth.getMessage()))
-                .authenticationEntryPoint((req, res, auth) -> res.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Session Expired, Please login again"));
+        http.exceptionHandling()
+        .accessDeniedHandler((req, res, auth) -> res.sendError(HttpServletResponse.SC_UNAUTHORIZED, auth.getMessage()))
+        .authenticationEntryPoint((req, res, auth) -> res.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Session Expired, Please login again"));
     }
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/success", "/clear", "/sign-up", "/actuator/**", "/v2/api-docs", "/swagger-resources/**",
+        web.ignoring()
+        .antMatchers("/success", "/clear", "/sign-up", "/actuator/**", "/v2/api-docs", "/swagger-resources/**",
                 "/swagger-ui.html", "/webjars/**", "/resources/**");
 
     }

@@ -44,7 +44,7 @@
         </Logger>
 
 
-        <Root level="trace">
+        <Root level="debug">
             <AppenderRef ref="ConsoleAppender" />
             <AppenderRef ref="LogFile" />
             <AppenderRef ref="LogToRollingFile" />
