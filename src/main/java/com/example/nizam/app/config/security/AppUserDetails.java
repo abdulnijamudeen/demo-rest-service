@@ -8,11 +8,15 @@ import org.springframework.security.core.userdetails.User;
 @SuppressWarnings("serial")
 public class AppUserDetails extends User {
 
-    public AppUserDetails(String username, String password, Collection<? extends GrantedAuthority> authorities) {
-        super(username, password, authorities);
+    private com.example.nizam.app.data.entity.User currentUser;
+
+    public AppUserDetails(com.example.nizam.app.data.entity.User user, String password, Collection<? extends GrantedAuthority> authorities) {
+        super(user.getUsername(), password, authorities);
+        this.currentUser = user;
     }
 
-
-
+    public com.example.nizam.app.data.entity.User getCurrentUser() {
+        return currentUser;
+    }
 
 }

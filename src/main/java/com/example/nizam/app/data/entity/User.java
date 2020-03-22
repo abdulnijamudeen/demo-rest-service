@@ -1,6 +1,5 @@
 package com.example.nizam.app.data.entity;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -16,20 +15,23 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "ITEM")
+@Table(name = "USER")
 @Data
 @NoArgsConstructor
-public class Item {
+public class User {
     @Id
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long itemId;
-    @Column(name = "DESCRIPTION")
-    private String shortDescription;
-    @Column(name = "PRICE")
-    private BigDecimal price;
-    @Column(name = "BRAND")
-    private String brand;
+    private Long userId;
+    @Column(name = "NAME")
+    private String name;
+    @Column(name = "USERNAME")
+    private String username;
+    @JsonIgnore
+    @Column(name = "PASSWORD")
+    private String password;
+    @Column(name = "ROLE")
+    private String role;
     @JsonIgnore
     @Column(name = "CREATED_DATE")
     private Date createdDate;

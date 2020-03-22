@@ -4,12 +4,16 @@ import java.time.Instant;
 import java.util.Date;
 import java.util.List;
 
+import javax.annotation.security.RolesAllowed;
+
 import com.example.nizam.app.data.entity.Item;
-import com.example.nizam.app.data.service.ItemService;
+import com.example.nizam.app.data.service.Item.ItemService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,6 +38,7 @@ public class ItemController {
     ItemService itemService;
 
     @ApiOperation("List of all items")
+    @PreAuthorize("hasRole('Administrator')")
     @GetMapping()
     public ResponseEntity<List<Item>> listAllItems() {
         var items = itemService.itemListOrderedByHighestPrice();
@@ -52,6 +57,7 @@ public class ItemController {
     }
 
     @ApiOperation("Get item by Item Id")
+    @Secured("User")
     @GetMapping("/{id}")
     public ResponseEntity<Item> getItem(@ApiParam("Item Id") @PathVariable Long id) {
          Item item = itemService.findItem(id);
@@ -60,6 +66,7 @@ public class ItemController {
     }
 
     @ApiOperation("Remove item by Item Id")
+    @RolesAllowed("Administrator")
     @DeleteMapping("/{id}")
     public ResponseEntity<List<Item>> removeItem(@ApiParam("Item Id") @PathVariable Long id) {
         itemService.removeItem(id);

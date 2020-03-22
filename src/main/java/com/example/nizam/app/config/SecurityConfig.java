@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -25,6 +26,7 @@ import org.springframework.security.web.authentication.logout.LogoutSuccessHandl
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -51,14 +53,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors().and().authorizeRequests().anyRequest().authenticated();
 
         http.formLogin()
-        .loginProcessingUrl("/login")
+        .loginProcessingUrl("/api/auth/login")
         .usernameParameter("username")
         .passwordParameter("password")
         .successHandler(authenticationSuccessHandler())
         .failureHandler((req, resp, auth) -> resp.sendError(HttpServletResponse.SC_UNAUTHORIZED, auth.getMessage()));
 
         http.logout()
-        .logoutUrl("/logout")
+        .logoutUrl("/api/auth/logout")
         .clearAuthentication(true)
         .invalidateHttpSession(true)
         .logoutSuccessHandler(logoutSuccessHandler());
@@ -73,14 +75,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring()
-        .antMatchers("/success", "/clear", "/sign-up", "/actuator/**", "/v2/api-docs", "/swagger-resources/**",
+        .antMatchers("/api/auth/sign-up", "/api/auth/success", "/api/auth/clear", "/actuator/**", "/v2/api-docs", "/swagger-resources/**",
                 "/swagger-ui.html", "/webjars/**", "/resources/**");
 
     }
 
     @Bean
     public AuthenticationSuccessHandler authenticationSuccessHandler() {
-        return new ForwardAuthenticationSuccessHandler("/success") {
+        return new ForwardAuthenticationSuccessHandler("/api/auth/success") {
             @Override
             public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
                 super.onAuthenticationSuccess(request, response, authentication);
@@ -90,7 +92,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public LogoutSuccessHandler logoutSuccessHandler() {
-        return new ForwardLogoutSuccessHandler("/clear") {
+        return new ForwardLogoutSuccessHandler("/api/auth/clear") {
             @Override
             public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
                 super.onLogoutSuccess(request, response, authentication);

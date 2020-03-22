@@ -20,3 +20,13 @@ INSERT INTO ITEM (DESCRIPTION, PRICE, BRAND, CREATED_DATE) VALUES
 ('Pack of 20 1.5V AA Alkaline Batteries - Non-rechargeable batteries - do not attempt to recharge', 682.99, 'Penasonic', NOW()),
 ('2 HDMI ports to connect set top box, Blu Ray players, gaming console | 2 USB ports to connect hard drives and other USB devices | 1 VGA', 12000.75, 'MicroMax', NOW()),
 ('2 compartments, including a padded laptop compartment ideal for carrying laptops up to 15.6 inches', 529.36, 'Solimo', NOW());
+
+CREATE TABLE IF NOT EXISTS `USER` (
+   `ID` BIGINT NOT NULL AUTO_INCREMENT,
+   NAME VARCHAR(200) NOT NULL,
+   USERNAME VARCHAR(200) NOT NULL,
+   PASSWORD VARCHAR(200) NOT NULL,
+   ROLE VARCHAR(20) NOT NULL,
+   CREATED_DATE DATETIME NULL,
+   PRIMARY KEY (`ID`)
+) ENGINE=INNODB  DEFAULT CHARSET=UTF8;
