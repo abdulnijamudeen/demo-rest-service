@@ -1,5 +1,6 @@
 package com.example.nizam.app.data.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -18,7 +19,8 @@ import lombok.NoArgsConstructor;
 @Table(name = "USER")
 @Data
 @NoArgsConstructor
-public class User {
+@SuppressWarnings("serial")
+public class User implements Serializable {
     @Id
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
