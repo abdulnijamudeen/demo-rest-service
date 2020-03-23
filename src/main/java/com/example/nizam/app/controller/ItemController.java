@@ -38,7 +38,7 @@ public class ItemController {
     ItemService itemService;
 
     @ApiOperation("List of all items")
-    @PreAuthorize("hasRole('Administrator')")
+    @PreAuthorize("hasRole('Administrator')") //TODO: method security not working
     @GetMapping()
     public ResponseEntity<List<Item>> listAllItems() {
         var items = itemService.itemListOrderedByHighestPrice();
