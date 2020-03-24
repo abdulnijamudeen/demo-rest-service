@@ -20,25 +20,25 @@
     </Appenders>
     <Loggers>
         <Logger name="com.example.nizam.app" level="debug" additivity="false">
-            <AppenderRef ref="LogToConsole" />
+          <!--   <AppenderRef ref="LogToConsole" /> -->
             <AppenderRef ref="LogToFile" />
             <AppenderRef ref="LogToRollingFile" />
         </Logger>
 
         <Logger name="org.springframework" level="debug" additivity="false">
-          <AppenderRef ref="LogToConsole" />
+          <!-- <AppenderRef ref="LogToConsole" /> -->
           <AppenderRef ref="LogToFile" />
           <AppenderRef ref="LogToRollingFile" />
         </Logger>
 
         <Logger name="org.hibernate" level="debug" additivity="false">
-           <AppenderRef ref="LogToConsole" />
+          <!--  <AppenderRef ref="LogToConsole" /> -->
            <AppenderRef ref="LogToFile" />
            <AppenderRef ref="LogToRollingFile" />
         </Logger>
 
         <Logger name="org.flywaydb" level="debug" additivity="false">
-           <AppenderRef ref="LogToConsole" />
+         <!--   <AppenderRef ref="LogToConsole" /> -->
            <AppenderRef ref="LogToFile" />
            <AppenderRef ref="LogToRollingFile" />
         </Logger>

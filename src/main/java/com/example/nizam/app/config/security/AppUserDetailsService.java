@@ -3,6 +3,7 @@ package com.example.nizam.app.config.security;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.nizam.app.data.enumeration.UserRole;
 import com.example.nizam.app.data.service.user.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +35,7 @@ public class AppUserDetailsService implements UserDetailsService {
         }
         var user = userOptional.get();
         List<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority(user.getRole()));
+        authorities.add(new SimpleGrantedAuthority(UserRole.displayMatch(user.getRole()).getRole()));
         return new AppUserDetails(user, user.getPassword(), authorities);
     }
 

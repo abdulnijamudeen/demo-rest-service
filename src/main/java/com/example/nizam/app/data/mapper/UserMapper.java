@@ -28,7 +28,7 @@ public class UserMapper implements EntityMapper<SignUp, User> {
         user.setName(signUp.getName());
         user.setUsername(signUp.getUsername());
         user.setPassword(passwordEncoder.encode(signUp.getPassword()));
-        user.setRole(UserRole.roleMatch(signUp.getRole()).getRole());
+        user.setRole(UserRole.displayMatch(signUp.getRole()).getDisplay());
         user.setCreatedDate(AppUtils.getInstant());
         return user;
     }

@@ -38,8 +38,8 @@ public class ItemController {
     ItemService itemService;
 
     @ApiOperation("List of all items")
-    @PreAuthorize("hasRole('Administrator')") //TODO: method security not working
     @GetMapping()
+    @PreAuthorize("hasRole('ROLE_ADMINISTRATOR','ROLE_USER')")
     public ResponseEntity<List<Item>> listAllItems() {
         var items = itemService.itemListOrderedByHighestPrice();
         LOG.info("List of all items :" + items.size());
@@ -48,6 +48,7 @@ public class ItemController {
 
     @ApiOperation("Add new Item")
     @PostMapping()
+    @PreAuthorize("hasRole('ROLE_ADMINISTRATOR')")
     public ResponseEntity<Item> addItem(@RequestBody Item item) {
         item.setItemId(null);
         item.setCreatedDate(Date.from(Instant.now()));
@@ -57,8 +58,8 @@ public class ItemController {
     }
 
     @ApiOperation("Get item by Item Id")
-    @Secured("User")
     @GetMapping("/{id}")
+    @Secured({"ROLE_ADMINISTRATOR", "ROLE_USER"})
     public ResponseEntity<Item> getItem(@ApiParam("Item Id") @PathVariable Long id) {
          Item item = itemService.findItem(id);
          LOG.info("Get item by Item Id :" + item.toString());
@@ -66,8 +67,8 @@ public class ItemController {
     }
 
     @ApiOperation("Remove item by Item Id")
-    @RolesAllowed("Administrator")
     @DeleteMapping("/{id}")
+    @RolesAllowed("ROLE_ADMINISTRATOR")
     public ResponseEntity<List<Item>> removeItem(@ApiParam("Item Id") @PathVariable Long id) {
         itemService.removeItem(id);
          List<Item> items = itemService.itemListOrderedByHighestPrice();
