@@ -3,6 +3,7 @@
     <Properties>
         <Property name="LOG_PATTERN">[%-5p] | %d{yyyy-MM-dd HH:mm:ss.SSS} | [%t] %c (%F:%L) - %m%n</Property>
         <Property name="logFilePath">log/demo-rest-service.log</Property>
+        <Property name="logRollFilePath">log/archive/demo-rest-service.log</Property>
     </Properties>
     <Appenders>
        <Console name="LogToConsole" target="SYSTEM_OUT">
@@ -11,10 +12,10 @@
         <File name="LogToFile" fileName="${logFilePath}">
             <PatternLayout pattern="${LOG_PATTERN}"/>
         </File>
-        <RollingFile name="LogToRollingFile" fileName="${logFilePath}" filePattern="${logFilePath}/demo-rest-service.%i.log.gz">
+        <RollingFile name="LogToRollingFile" fileName="${logRollFilePath}" filePattern="log/$${date:yyyy-MM}/demo-rest-service-%d{MM-dd-yyyy}-%i.log.gz">
             <PatternLayout pattern="${LOG_PATTERN}"/>
             <Policies>
-                <SizeBasedTriggeringPolicy size="10MB" />
+                <SizeBasedTriggeringPolicy size="5MB" />
             </Policies>
         </RollingFile>
     </Appenders>
@@ -45,9 +46,9 @@
 
 
         <Root level="debug">
-            <AppenderRef ref="ConsoleAppender" />
-            <AppenderRef ref="LogFile" />
-            <AppenderRef ref="LogToRollingFile" />
+          <!--   <AppenderRef ref="LogToConsole" />
+            <AppenderRef ref="LogToFile" />
+            <AppenderRef ref="LogToRollingFile" /> -->
         </Root>
     </Loggers>
 </Configuration>
