@@ -1,14 +1,15 @@
 # Demo Rest API Service using spring boot
 
-prerequisite
+### Prerequisite
 
-Java 8
-My Sql 5.7
-Maven
-Lombok Annotaion Processor (Plugin depand on IDE / Editor)
+- Java 8
+- My Sql 5.7
+- Maven
+- Lombok Annotaion Processor (Plugin depand on IDE / Editor)
+- Redis 3.x
 
-API documentation
+### API documentation
 
 http://localhost:20201/swagger-ui.html#/
 
-For API request / response details , please visit about link after application started.
+For API request / response details , please visit above link after application started.
