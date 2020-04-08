@@ -1,5 +1,7 @@
 package com.example.nizam.app.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.example.nizam.app.data.mapper.UserMapper;
 import com.example.nizam.app.data.model.request.SignUp;
 import com.example.nizam.app.data.model.response.ResponseStatus;
@@ -59,14 +61,17 @@ public class AuthController extends BaseController {
 
     @ApiOperation(value = "Authentication Success Forward URL.", hidden = true)
     @PostMapping("/success")
-    public ResponseEntity<UserResponse> getAuthenticatedUser() {
+    public ResponseEntity<UserResponse> getAuthenticatedUser(HttpServletRequest request) {
         LOG.info("Authentication Success Forward URL - AuthController");
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null) {
             throw new IllegalStateException("No user logged in.");
         }
         var savedUser = AppUtils.getCurrentUser();
-        return new ResponseEntity<>(userResponse(savedUser), HttpStatus.OK);
+        UserResponse user = userResponse(savedUser);
+        String xAuthToken = request.getSession().getId();
+        user.setToken(xAuthToken);
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     @ApiOperation("User logout API")

@@ -11,4 +11,5 @@ public class UserResponse implements Serializable {
     private String name;
     private String username;
     private String role;
+    private String token;
 }
